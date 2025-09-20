@@ -21,12 +21,12 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
 
 public class TokenUtil {
     public static String generateToken(Map<String, Object> claims, String secret, long expiration) {
-        long now = System.currentTimeMillis();
         return Jwts.builder()
                 .claims(claims)
                 .issuedAt(new Date())
@@ -44,7 +44,6 @@ public class TokenUtil {
     }
 
     private static SecretKey getSigningKey(String secret) {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 }
