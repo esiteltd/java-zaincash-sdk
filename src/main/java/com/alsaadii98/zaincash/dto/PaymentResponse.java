@@ -17,6 +17,7 @@ package com.alsaadii98.zaincash.dto;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -28,7 +29,7 @@ public class PaymentResponse {
     private String serviceType;
     private String lang;
     private String orderId;
-    private List<?> currencyConversion;
+    private Object currencyConversion;
     private String referenceNumber;
     private String redirectUrl;
     private boolean credit;
@@ -41,7 +42,7 @@ public class PaymentResponse {
     public PaymentResponse() {
     }
 
-    public PaymentResponse(String source, String type, String amount, String to, String serviceType, String lang, String orderId, List<?> currencyConversion, String referenceNumber, String redirectUrl, boolean credit, String status, boolean reversed, String createdAt, String updatedAt, String id) {
+    public PaymentResponse(String source, String type, String amount, String to, String serviceType, String lang, String orderId, Object currencyConversion, String referenceNumber, String redirectUrl, boolean credit, String status, boolean reversed, String createdAt, String updatedAt, String id) {
         this.source = source;
         this.type = type;
         this.amount = amount;
