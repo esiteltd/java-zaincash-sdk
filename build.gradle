@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.alsaadii98'
+version = '1.0.0'
+
+repositories {
+    maven {
+        url = uri("https://maven.pkg.github.com/alsaadii98/java-sdk-core" )
+    }
+    mavenCentral()
+}
+
+dependencies {
+    // HTTP Client
+    implementation 'com.squareup.okhttp3:okhttp:5.1.0'
+    // JSON Parsing
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.20.0'
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.42'
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.13.0'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
