@@ -1,14 +1,12 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
-group = 'org.alsaadii98'
+group = 'com.alsaadii98'
 version = '1.0.0'
 
 repositories {
-    maven {
-        url = uri("https://maven.pkg.github.com/alsaadii98/java-sdk-core" )
-    }
     mavenCentral()
 }
 
@@ -22,6 +20,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.42")
     // JWT
     implementation 'io.jsonwebtoken:jjwt-jackson:0.13.0'
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -29,4 +28,17 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/esiteltd/java-zaincash-sdk"
+            credentials {
+                username = System.getenv("GITHUB_USERNAME")
+                password = System.getenv("GITHUB_PACKAGE_TOKEN_ORG")
+            }
+        }
+    }
 }
