@@ -15,9 +15,7 @@
 
 package com.alsaadii98.zaincash.dto;
 
-import lombok.Data;
 
-@Data
 public class PaymentRequest {
     // The total amount for the payment of your order in IQD (Iraqi Dinar).
     // In case the currency is Dollar (USD), the amount should be multiplied by exchange rate
@@ -41,6 +39,38 @@ public class PaymentRequest {
         this.amount = amount;
         this.serviceType = serviceType;
         this.orderId = orderId;
+        this.redirectUrl = redirectUrl;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public void setRedirectUrl(String redirectUrl) {
         this.redirectUrl = redirectUrl;
     }
 }

@@ -15,10 +15,6 @@
 
 package com.alsaadii98.zaincash.enums;
 
-
-import lombok.Getter;
-
-@Getter
 public enum Environment {
     SANDBOX(false),
     PRODUCTION(true);
@@ -27,5 +23,9 @@ public enum Environment {
 
     Environment(boolean isProduction) {
         this.isProduction = isProduction;
+    }
+
+    public boolean isProduction() {
+        return isProduction;
     }
 }

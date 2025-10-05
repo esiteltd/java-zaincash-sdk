@@ -15,16 +15,18 @@
 
 package com.alsaadii98.zaincash.enums;
 
-import lombok.Getter;
 
-@Getter
 public enum Language {
-    ENGLISH ("en"),
-    ARABIC  ("ar");
+    ENGLISH("en"),
+    ARABIC("ar");
 
     private final String code;
 
     Language(String code) {
         this.code = code;
+    }
+
+    public String getCode() {
+        return code;
     }
 }

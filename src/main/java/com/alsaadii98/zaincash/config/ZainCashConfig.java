@@ -18,9 +18,7 @@ package com.alsaadii98.zaincash.config;
 import com.alsaadii98.zaincash.enums.Environment;
 import com.alsaadii98.zaincash.enums.Language;
 import com.alsaadii98.zaincash.exception.InvalidConfigException;
-import lombok.Data;
 
-@Data
 public class ZainCashConfig {
     // Zain Cash Merchant ID - provided by Zain Cash
     private String msisdn;
@@ -46,7 +44,48 @@ public class ZainCashConfig {
         this.language = language;
     }
 
+    public String getMsisdn() {
+        return msisdn;
+    }
+
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public Environment getIsProduction() {
+        return isProduction;
+    }
+
+    public void setIsProduction(Environment isProduction) {
+        this.isProduction = isProduction;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
     public String getBaseUrl() {
-        return isProduction.isProduction() ? "https://api.zaincash.iq" : "https://test.zaincash.iq";
+        Environment environment = getIsProduction();
+        return environment.isProduction() ? "https://api.zaincash.iq" : "https://test.zaincash.iq";
     }
 }

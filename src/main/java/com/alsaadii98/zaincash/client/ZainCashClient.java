@@ -22,23 +22,28 @@ import com.alsaadii98.zaincash.dto.StatusResponse;
 import com.alsaadii98.zaincash.util.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
-import okhttp3.*;
 
-import java.io.IOException;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.time.Instant;
+import java.util.Date;
 import java.util.Map;
 
 public class ZainCashClient {
 
-    private static final MediaType JSON = MediaType.get("application/json");
-
     private final ZainCashConfig config;
-    private final OkHttpClient client;
+    private final HttpClient client;
     private final ObjectMapper objectMapper;
 
     public ZainCashClient(ZainCashConfig config) {
         this.config = config;
-        this.client = new OkHttpClient();
+        this.client = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(30))
+                .build();
         this.objectMapper = new ObjectMapper();
     }
 
@@ -46,22 +51,25 @@ public class ZainCashClient {
         String token = generateToken(request);
         String requestBody = buildRequestBody(token);
 
-        Request httpRequest = new Request.Builder()
-                .url(config.getBaseUrl() + "/transaction/init")
-                .post(RequestBody.create(requestBody, JSON))
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(URI.create(config.getBaseUrl() + "/transaction/init"))
+                .header("Content-Type", "application/json")
+                .header("Accept", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .timeout(Duration.ofSeconds(30))
                 .build();
 
         return executeRequest(httpRequest);
     }
 
-    // Token Will be extract from Request Query Parameter
     public StatusResponse checkPaymentStatus(String token) {
         Claims claims = TokenUtil.decodeToken(token, config.getSecret());
         String status = claims.get("status", String.class);
         String orderId = claims.get("orderId", String.class);
         String id = claims.get("id", String.class);
-        long iat = claims.get("iat", Long.class);
-        long exp = claims.get("exp", Long.class);
+
+        Date iat = claims.get("iat", Date.class);
+        Date exp = claims.get("exp", Date.class);
 
         return new StatusResponse(
                 status, orderId, id, iat, exp
@@ -99,20 +107,22 @@ public class ZainCashClient {
         }
     }
 
-    private String executeRequest(Request request) {
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful() || response.body() == null) {
-                throw new RuntimeException("Payment initiation failed: " + response);
+    private String executeRequest(HttpRequest request) {
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() < 200 || response.statusCode() >= 300) {
+                throw new RuntimeException("Payment initiation failed. HTTP " + response.statusCode() + ": " + response.body());
             }
 
             PaymentResponse paymentResponse = objectMapper.readValue(
-                    response.body().string(), PaymentResponse.class
+                    response.body(), PaymentResponse.class
             );
 
             return config.getBaseUrl() + "/transaction/pay?id=" + paymentResponse.getId();
 
-        } catch (IOException e) {
-            throw new RuntimeException("Payment initiation failed", e);
+        } catch (Exception e) {
+            throw new RuntimeException("Payment initiation failed: " + e.getMessage(), e);
         }
     }
 }

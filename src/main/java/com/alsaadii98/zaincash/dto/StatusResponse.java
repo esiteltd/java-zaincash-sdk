@@ -15,24 +15,63 @@
 
 package com.alsaadii98.zaincash.dto;
 
-import lombok.Data;
+import java.util.Date;
 
-@Data
 public class StatusResponse {
     private String success;
     private String orderId;
     private String id;
-    private long iat;
-    private long exp;
+    private Date iat;
+    private Date exp;
 
     public StatusResponse() {
     }
 
-    public StatusResponse(String success, String orderId, String id, long iat, long exp) {
+    public StatusResponse(String success, String orderId, String id, Date iat, Date exp) {
         this.success = success;
         this.orderId = orderId;
         this.id = id;
         this.iat = iat;
+        this.exp = exp;
+    }
+
+    public String getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(String success) {
+        this.success = success;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Object getIat() {
+        return iat;
+    }
+
+    public void setIat(Date iat) {
+        this.iat = iat;
+    }
+
+    public Object getExp() {
+        return exp;
+    }
+
+    public void setExp(Date exp) {
         this.exp = exp;
     }
 }
