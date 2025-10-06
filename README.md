@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="./assets/ZainCash-White.svg" alt="Zain Cash Logo" width="200"/>
-</p>
+<img src="./assets/ZainCash-White.svg" alt="Zain Cash Logo" width="200"/>
 
 # Zain Cash Payment Gateway - Java SDK
 
@@ -31,11 +29,11 @@ Add to your `application.properties` or `.yml`:
 
 ```properties
 zaincash:
-  msisdn: 
-  secret: 
-  merchant-id: 
-  environment: 
-  language: 
+msisdn:
+secret: 
+merchant-id:
+environment: 
+language: 
 ```
 
 - **Environment:** `PRODUCTION` or `SANDBOX`
@@ -49,27 +47,27 @@ Use the `PaymentRequest` class:
 
 ```java
 PaymentRequest paymentRequest = new PaymentRequest(
-    your_amount,
-    your_service_type,
-    your_order_id,
-    "https://your-redirect-url.com"
+        your_amount,
+        your_service_type,
+        your_order_id,
+        "https://your-redirect-url.com"
 );
 ```
 
 **Notes:**
 
 - **Amount (IQD):**
-  - Must be in Iraqi Dinar (IQD).
-  - If using USD, multiply by the exchange rate (e.g., `10 USD * 1450 = 14500 IQD`).
-  - Must be greater than **1000 IQD**.
+    - Must be in Iraqi Dinar (IQD).
+    - If using USD, multiply by the exchange rate (e.g., `10 USD * 1450 = 14500 IQD`).
+    - Must be greater than **1000 IQD**.
 
 - **Service Type:**  
   Brief description (e.g., `"Book Purchase"`, `"Internet Subscription"`).
 
 - **Order ID:**  
-  Used for internal tracking (e.g., `"Order12345"`).  
-  - Type: String  
-  - Max Length: 512 characters
+  Used for internal tracking (e.g., `"Order12345"`).
+    - Type: String
+    - Max Length: 512 characters
 
 - **Redirect URL:**  
   Publicly accessible endpoint to handle ZainCash response.
@@ -85,10 +83,10 @@ private final ZainCashSDK zainCashSDK;
 
 public void initializePayment() {
     PaymentRequest paymentRequest = new PaymentRequest(
-        your_amount,
-        your_service_type,
-        your_order_id,
-        "https://your-redirect-url.com"
+            your_amount,
+            your_service_type,
+            your_order_id,
+            "https://your-redirect-url.com"
     );
 
     try {
@@ -138,4 +136,5 @@ public class StatusResponse {
 
 For any issues, feel free to reach out.
 
-Developed with ❤️ by [@alsaadii98](https://github.com/alsaadii98) at [eSITE Information Technology](https://esite-iq.com).
+Developed with ❤️ by [@alsaadii98](https://github.com/alsaadii98)
+at [eSITE Information Technology](https://esite-iq.com).
